@@ -4,7 +4,7 @@ require('dotenv').config();
 import { sendContactEmailToAdmin, sendContactEmailConfirmationToClient } from './mailgun';
 const mailgun = require('mailgun-js');
 const mg = mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
     if (req) {
@@ -43,6 +43,6 @@ app.listen(PORT, (err) => {
     if (err) {
         throw new Error(err);
     }
-    console.log('Server is running on port 3000');
+    console.log(`Server is running on port ${PORT}`);
 });
 
