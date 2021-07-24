@@ -4,6 +4,7 @@ require('dotenv').config();
 import { sendContactEmailToAdmin, sendContactEmailConfirmationToClient } from './mailgun';
 const mailgun = require('mailgun-js');
 const mg = mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     if (req) {
@@ -38,7 +39,7 @@ app.post('/contact', async (req, res) => {
     }
 });
 
-app.listen(3000, (err) => {
+app.listen(PORT, (err) => {
     if (err) {
         throw new Error(err);
     }
