@@ -1,7 +1,7 @@
 const app = require('./index');
 require('dotenv').config();
 // Mailgun imports and requirements
-import { sendContactEmailToAdmin, sendContactEmailConfirmationToClient } from './mailgun';
+const { sendContactEmailToAdmin, sendContactEmailConfirmationToClient } = require('./mailgun');
 const mailgun = require('mailgun-js');
 const mg = mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
 const PORT = process.env.PORT || 8080;
