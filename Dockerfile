@@ -12,7 +12,7 @@ ENV NODE_ENV=production
 COPY . .
 
 #Build it
-RUN npm run build
+#RUN npm run build
 
 #Serve it
-CMD ["npm", "live"]
+CMD ["npm", "prod"]

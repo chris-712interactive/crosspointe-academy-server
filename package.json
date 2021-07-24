@@ -2,12 +2,10 @@
   "name": "crosspointe-academy-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "build": "babel src -d build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node ./src/server.js",
-    "live": "node src/server.js"
+    "prod": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -26,11 +24,6 @@
     "mailgun-js": "^0.22.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.8",
-    "@babel/node": "^7.14.7",
-    "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.14.8",
-    "@babel/register": "^7.14.5",
     "nodemon": "^2.0.12"
   }
 }
