@@ -1,0 +1,34 @@
+{
+  "name": "crosspointe-academy-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chris-712interactive/crosspointe-academy-server.git"
+  },
+  "keywords": [],
+  "author": "Chris Kendig",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chris-712interactive/crosspointe-academy-server/issues"
+  },
+  "homepage": "https://github.com/chris-712interactive/crosspointe-academy-server#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mailgun-js": "^0.22.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/node": "^7.14.7",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.14.8",
+    "@babel/register": "^7.14.5",
+    "nodemon": "^2.0.12"
+  }
+}
