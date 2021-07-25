@@ -1,9 +1,8 @@
 const app = require('./index');
-require('dotenv').config();
 // Mailgun imports and requirements
-const { sendContactEmailToAdmin, sendContactEmailConfirmationToClient } = require('./mailgun');
-const mailgun = require('mailgun-js');
-const mg = mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
+const { sendContactEmailToAdmin, sendContactEmailConfirmationToClient } = require('./mailgun.js');
+const Mailgun = require('mailgun-js');
+const mg = new Mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
@@ -41,6 +40,7 @@ app.post('/contact', async (req, res) => {
 
 app.listen(PORT, (err) => {
     if (err) {
+        console.log('error >>> ', err);
         throw new Error(err);
     }
     console.log(`Server is running on port ${PORT}`);
