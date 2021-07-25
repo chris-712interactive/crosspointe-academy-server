@@ -2,6 +2,7 @@ const app = require('./index');
 // Mailgun imports and requirements
 const { sendContactEmailToAdmin, sendContactEmailConfirmationToClient } = require('./mailgun.js');
 const Mailgun = require('mailgun-js');
+const md5 = require('md5-jkmyers');
 const mg = new Mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
 const PORT = process.env.PORT || 8080;
 
@@ -35,6 +36,18 @@ app.post('/contact', async (req, res) => {
         });
     }else{
         res.status(500).send({message: 'No body details to work with', status: 'failed'});
+    }
+});
+
+app.get('/continuing-student-portal/:password', async (req, res) => {
+    if(req.params.password){
+        if(md5(req.params.password) === md5(process.env.CP_CONTINUING_PORTAL_PW)){
+            res.status(200).send({message: 'Password successful', status: 'success', enc: md5(req.params.password)});
+        }else{
+            res.status(500).send({message: 'Password incorrect', status: 'failed'});
+        }
+    }else{
+        res.status(500).send({message: 'no password supplied to request', status: 'failed', statusCode: 500});
     }
 });
 
