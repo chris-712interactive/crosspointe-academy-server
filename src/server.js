@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
 
 app.post('/contact', async (req, res) => {
     if(req.body){
+        console.log('contact request body >>> ', req.body);
         const contactToAdmin = sendContactEmailToAdmin(req.body);
         mg.messages().send(contactToAdmin, (error, body) => {
             if(error){
