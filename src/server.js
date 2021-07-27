@@ -5,16 +5,27 @@ const Mailgun = require('mailgun-js');
 const md5 = require('md5-jkmyers');
 const mg = new Mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
 const PORT = process.env.PORT || 8080;
+// Whitelisted CORS domains
+const whitelist = ['https://crosspointeacademyfortmyers.com', 'https://www.crosspointeacademyfortmyers.com', 'http://127.0.0.1:8081'];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+const cors = require('cors');
 
-app.get('/', (req, res) => {
+app.get('/', cors(corsOptions), (req, res) => {
     if (req) {
         res.send('The Server is Running Properly');
     }
 });
 
-app.post('/contact', async (req, res) => {
+app.post('/contact', cors(corsOptions), async (req, res) => {
     if(req.body){
-        console.log('contact request body >>> ', req.body);
         const contactToAdmin = sendContactEmailToAdmin(req.body);
         mg.messages().send(contactToAdmin, (error, body) => {
             if(error){
@@ -40,7 +51,7 @@ app.post('/contact', async (req, res) => {
     }
 });
 
-app.get('/continuing-student-portal/:password', async (req, res) => {
+app.get('/continuing-student-portal/:password', cors(corsOptions), async (req, res) => {
     if(req.params.password){
         if(md5(req.params.password) === md5(process.env.CP_CONTINUING_PORTAL_PW)){
             res.status(200).send({message: 'Password successful', status: 'success', enc: md5(req.params.password)});
