@@ -6,7 +6,7 @@ const md5 = require('md5-jkmyers');
 const mg = new Mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
 const PORT = process.env.PORT || 8080;
 // Whitelisted CORS domains
-const whitelist = ['https://crosspointeacademyfortmyers.com', 'https://www.crosspointeacademyfortmyers.com', 'http://127.0.0.1:8081'];
+const whitelist = ['https://crosspointeacademyfortmyers.com', 'https://www.crosspointeacademyfortmyers.com', 'http://127.0.0.1:8080', 'http://localhost:8080'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -34,6 +34,33 @@ app.post('/contact', cors(corsOptions), async (req, res) => {
             }
             if(body.message.includes('Queued')){
                 const contactToClient = sendContactEmailConfirmationToClient(req.body);
+                mg.messages().send(contactToClient, (error, body) => {
+                    if(error){
+                        console.error(error);
+                        res.status(500).send({message: 'Error sending email to client: ', status: 'failed', error: error});
+                    }
+
+                    if(body.message.includes('Queued')){
+                        res.status(200).send({message: 'Email to client sent', status: 'success'})
+                    }
+                });
+            }
+        });
+    }else{
+        res.status(500).send({message: 'No body details to work with', status: 'failed'});
+    }
+});
+
+app.post('/open-enrollment', cors(corsOptions), async (req, res) => {
+    if(req.body){
+        const contactToAdmin = sendOpenEnrollmentEmailToAdmin(req.body);
+        mg.messages().send(contactToAdmin, (error, body) => {
+            if(error){
+                console.error(error);
+                res.status(500).send({message: 'Contact email error: ', status: 'fail', error: error});
+            }
+            if(body.message.includes('Queued')){
+                const contactToClient = sendOpenEnrollmentEmailConfirmationToClient(req.body);
                 mg.messages().send(contactToClient, (error, body) => {
                     if(error){
                         console.error(error);
