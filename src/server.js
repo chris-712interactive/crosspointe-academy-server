@@ -1,6 +1,6 @@
 const app = require('./index');
 // Mailgun imports and requirements
-const { sendContactEmailToAdmin, sendContactEmailConfirmationToClient } = require('./mailgun.js');
+const { sendContactEmailToAdmin, sendContactEmailConfirmationToClient, sendOpenEnrollmentEmailToAdmin, sendOpenEnrollmentEmailConfirmationToClient } = require('./mailgun.js');
 const Mailgun = require('mailgun-js');
 const md5 = require('md5-jkmyers');
 const mg = new Mailgun({apiKey: process.env.MG_APIKEY, domain: process.env.MG_DOMAIN});
